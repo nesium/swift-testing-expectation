@@ -15,12 +15,12 @@ The `Expectation` vended from this library fills that gap:
 
 ```swift
 @Test func testMethodEventuallyTriggersClosure() async {
-	let expectation = Expectation()
+    let expectation = Expectation()
 
-	systemUnderTest.closure = { expectation.fulfill() }
-	systemUnderTest.method()
+    systemUnderTest.closure = { expectation.fulfill() }
+    systemUnderTest.method()
 
-	await expectation.fulfillment(within: .seconds(5))
+    await expectation.fulfillment(within: .seconds(5))
 }
 ```
 
@@ -32,6 +32,6 @@ To install swift-async-queue in your project with [Swift Package Manager](https:
 
 ```swift
 dependencies: [
-	.package(url: "https://github.com/dfed/swift-testing-expectation", from: "0.1.0"),
+    .package(url: "https://github.com/dfed/swift-testing-expectation", from: "0.1.0"),
 ]
 ```
