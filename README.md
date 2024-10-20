@@ -14,7 +14,7 @@ The [Swift Testing](https://developer.apple.com/documentation/testing/testing-as
 The `Expectation` vended from this library fills that gap:
 
 ```swift
-@Test func testMethodCallEventuallyTriggersClosure() async {
+@Test func testMethodEventuallyTriggersClosure() async {
 	let expectation = Expectation()
 
 	systemUnderTest.closure = { expectation.fulfill() }
@@ -23,15 +23,6 @@ The `Expectation` vended from this library fills that gap:
 	await expectation.fulfillment(within: .seconds(5))
 }
 ```
-
-## Requirements
-
-* Xcode 16.0 or later.
-* iOS 16 or later.
-* tvOS 16 or later.
-* watchOS 9 or later.
-* macOS 13 or later.
-* Swift 5.10 or later.
 
 ## Installation
 
