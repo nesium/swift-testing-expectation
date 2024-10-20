@@ -5,11 +5,11 @@
 [![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fdfed%2Fswift-testing-expectation%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/dfed/swift-testing-expectation)
 [![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fdfed%2Fswift-testing-expectation%2Fbadge%3Ftype%3Dplatforms)](https://swiftpackageindex.com/dfed/swift-testing-expectation)
 
-Making it easy to create an asynchronous expectation in Swift Testing
+Create an asynchronous expectation in Swift Testing
 
 ## Testing with asynchronous expectations
 
-The [Swift Testing](https://developer.apple.com/documentation/testing/testing-asynchronous-code) vends a [confirmation](https://developer.apple.com/documentation/testing/confirmation(_:expectedcount:isolation:sourcelocation:_:)) method which enables testing asynchronous code. However unlike [XCTest](https://developer.apple.com/documentation/xctest/asynchronous_tests_and_expectations)’s [XCTestExpectation](https://developer.apple.com/documentation/xctest/xctestexpectation), this `confirmation` must be confirmed before the confirmation’s `body` completes. Swift Testing has no out-of-the-box way to ensure that an expectation is fulfilled at some indeterminate point in the future.
+The [Swift Testing](https://developer.apple.com/documentation/testing/testing-asynchronous-code) framework vends a [confirmation](https://developer.apple.com/documentation/testing/confirmation(_:expectedcount:isolation:sourcelocation:_:)) method which enables testing asynchronous code. However unlike [XCTest](https://developer.apple.com/documentation/xctest/asynchronous_tests_and_expectations)’s [XCTestExpectation](https://developer.apple.com/documentation/xctest/xctestexpectation), this `confirmation` must be confirmed before the confirmation’s `body` completes. Swift Testing has no out-of-the-box way to ensure that an expectation is fulfilled at some indeterminate point in the future.
 
 The `Expectation` vended from this library fills that gap:
 
