@@ -30,5 +30,5 @@ for directory in $(git rev-parse --show-toplevel)/.build/derivedData/*/; do
     build_type=$(basename $directory)
     echo "Finding coverage information for $build_type"
 
-    exportlcov $build_type 'AsyncQueueTests'
+    exportlcov $build_type 'TestingExpectationTests'
 done
