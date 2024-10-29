@@ -41,7 +41,7 @@ enum Platform: String, CaseIterable, CustomStringConvertible {
 			"platform=OS X"
 
 		case .watchOS_11:
-			"OS=11.0,name=Apple Watch Series 10 (45mm)"
+			"OS=11.0,name=Apple Watch Series 10 (46mm)"
 
 		case .visionOS_2:
 			"OS=2.0,name=Apple Vision Pro"
