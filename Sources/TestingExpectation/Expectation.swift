@@ -57,7 +57,7 @@ public actor Expectation {
 		let wait = Task {
 			try await Task.sleep(for: duration)
 			expect(isComplete, "Expectation not fulfilled within \(duration)", .init(
-				fileID: filePath,
+				fileID: fileID,
 				filePath: filePath,
 				line: line,
 				column: column
@@ -108,7 +108,7 @@ public actor Expectation {
 			expectedCount == fulfillCount,
 			"Expected \(expectedCount) calls to `fulfill()`. Received \(fulfillCount).",
 			.init(
-				fileID: filePath,
+				fileID: fileID,
 				filePath: filePath,
 				line: line,
 				column: column
