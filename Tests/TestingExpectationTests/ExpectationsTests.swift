@@ -55,7 +55,7 @@ struct ExpectationsTests {
 		let expectation3 = Expectation(expectedCount: 1)
 		var hasFulfilled = false
 		let wait = Task {
-			await Expectations(expectation1).fulfillment(within: .seconds(10))
+			await Expectations(expectation1, expectation2, expectation3).fulfillment(within: .seconds(10))
 			#expect(hasFulfilled)
 		}
 		Task {
@@ -99,7 +99,7 @@ struct ExpectationsTests {
 					confirmation()
 				}
 			)
-			expectation2.fulfill()
+			await expectation2.fulfill().value
 			let expectation3 = Expectation(
 				expectedCount: 1,
 				expect: { expectation, _, _ in
@@ -107,7 +107,7 @@ struct ExpectationsTests {
 					confirmation()
 				}
 			)
-			expectation3.fulfill()
+			await expectation3.fulfill().value
 
 			let systemUnderTest = Expectations(expectation1, expectation2, expectation3)
 			await systemUnderTest.fulfillment(within: .zero)
