@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name     = 'TestingExpectation'
-  s.version  = '0.1.2'
+  s.version  = '0.1.3'
   s.license  = 'MIT'
   s.summary  = 'Create an asynchronous expectation in Swift Testing'
   s.homepage = 'https://github.com/dfed/swift-testing-expectation'
