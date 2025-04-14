@@ -19,6 +19,7 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
+import Foundation
 
 public actor Expectations {
 	// MARK: Initialization
@@ -33,6 +34,7 @@ public actor Expectations {
 
 	// MARK: Public
 
+	@available(iOS 16.0, *)
 	public func fulfillment(
 		within duration: Duration,
 		filePath: String = #filePath,
@@ -45,6 +47,35 @@ public actor Expectations {
 				taskGroup.addTask {
 					await expectation.fulfillment(
 						within: duration,
+						filePath: filePath,
+						fileID: fileID,
+						line: line,
+						column: column
+					)
+				}
+			}
+			await taskGroup.waitForAll()
+		}
+	}
+
+	@available(
+		iOS,
+		deprecated: 16.0,
+		renamed: "fulfillment(within:filePath:fileID:line:column:)",
+		message: "Convert TimeInterval to Duration using '.seconds(timeInterval)'"
+	)
+	public func fulfillment(
+		timeout seconds: TimeInterval,
+		filePath: String = #filePath,
+		fileID: String = #fileID,
+		line: Int = #line,
+		column: Int = #column
+	) async {
+		await withTaskGroup(of: Void.self) { taskGroup in
+			for expectation in expectations {
+				taskGroup.addTask {
+					await expectation.fulfillment(
+						timeout: seconds,
 						filePath: filePath,
 						fileID: fileID,
 						line: line,

@@ -20,6 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+import Foundation
 import Testing
 
 public actor Expectation {
@@ -46,6 +47,7 @@ public actor Expectation {
 
 	// MARK: Public
 
+	@available(iOS 16.0, *)
 	public func fulfillment(
 		within duration: Duration,
 		filePath: String = #filePath,
@@ -57,6 +59,33 @@ public actor Expectation {
 		let wait = Task {
 			try await Task.sleep(for: duration)
 			expect(isComplete, "Expectation not fulfilled within \(duration)", .init(
+				fileID: fileID,
+				filePath: filePath,
+				line: line,
+				column: column
+			))
+		}
+		waits.append(wait)
+		try? await wait.value
+	}
+
+	@available(
+		iOS,
+		deprecated: 16.0,
+		renamed: "fulfillment(within:filePath:fileID:line:column:)",
+		message: "Convert TimeInterval to Duration using '.seconds(timeInterval)'"
+	)
+	public func fulfillment(
+		timeout seconds: TimeInterval,
+		filePath: String = #filePath,
+		fileID: String = #fileID,
+		line: Int = #line,
+		column: Int = #column
+	) async {
+		guard !isComplete else { return }
+		let wait = Task {
+			try await Task.sleep(nanoseconds: UInt64(seconds * Double(NSEC_PER_SEC)))
+			expect(isComplete, "Expectation not fulfilled within \(seconds) seconds", .init(
 				fileID: fileID,
 				filePath: filePath,
 				line: line,
@@ -105,8 +134,8 @@ public actor Expectation {
 		fulfillCount += 1
 		guard isComplete else { return }
 		expect(
-			expectedCount == fulfillCount,
-			"Expected \(expectedCount) calls to `fulfill()`. Received \(fulfillCount).",
+			self.expectedCount == self.fulfillCount,
+			"Expected \(self.expectedCount) calls to `fulfill()`. Received \(self.fulfillCount).",
 			.init(
 				fileID: fileID,
 				filePath: filePath,
