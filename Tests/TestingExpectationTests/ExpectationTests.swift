@@ -69,6 +69,21 @@ struct ExpectationTests {
 	}
 
 	@Test
+	func test_fulfill_triggersExpectationWhenExpectedCountIsZeroAndAssertForOverFulfillIsFalse() async {
+		await confirmation { confirmation in
+			let systemUnderTest = Expectation(
+				expectedCount: 0,
+				assertForOverFulfill: false,
+				expect: { expectation, _, _ in
+					#expect(expectation)
+					confirmation()
+				}
+			)
+			await systemUnderTest.fulfill().value
+		}
+	}
+
+	@Test
 	func test_fulfillment_doesNotWaitIfAlreadyFulfilled() async {
 		let systemUnderTest = Expectation(expectedCount: 0)
 		await systemUnderTest.fulfillment(within: .seconds(10))

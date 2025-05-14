@@ -27,10 +27,12 @@ public actor Expectation {
 	// MARK: Initialization
 
 	public init(
-		expectedCount: UInt = 1
+		expectedCount: UInt = 1,
+		assertForOverFulfill: Bool = true
 	) {
 		self.init(
 			expectedCount: expectedCount,
+			assertForOverFulfill: assertForOverFulfill,
 			expect: { fulfilledWithExpectedCount, comment, sourceLocation in
 				#expect(fulfilledWithExpectedCount, comment, sourceLocation: sourceLocation)
 			}
@@ -39,9 +41,11 @@ public actor Expectation {
 
 	init(
 		expectedCount: UInt,
+		assertForOverFulfill: Bool = true,
 		expect: @escaping (Bool, Comment?, SourceLocation) -> Void
 	) {
 		self.expectedCount = expectedCount
+		self.assertForOverFulfill = assertForOverFulfill
 		self.expect = expect
 	}
 
@@ -123,6 +127,7 @@ public actor Expectation {
 	}
 
 	private let expectedCount: UInt
+	private let assertForOverFulfill: Bool
 	private let expect: (Bool, Comment?, SourceLocation) -> Void
 
 	private func _fulfill(
@@ -134,7 +139,9 @@ public actor Expectation {
 		fulfillCount += 1
 		guard isComplete else { return }
 		expect(
-			self.expectedCount == self.fulfillCount,
+			self.assertForOverFulfill
+				? self.expectedCount == self.fulfillCount
+				: self.expectedCount <= self.fulfillCount,
 			"Expected \(self.expectedCount) calls to `fulfill()`. Received \(self.fulfillCount).",
 			.init(
 				fileID: fileID,
